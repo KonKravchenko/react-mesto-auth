@@ -9,4 +9,4 @@
   
 
 
-###     Ссылка на GH-Pages: https://konkravchenko.github.io/mesto-react/
+###     Ссылка на GH-Pages: https://konkravchenko.github.io/react-mesto-auth/
