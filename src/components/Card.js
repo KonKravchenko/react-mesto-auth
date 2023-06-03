@@ -1,5 +1,6 @@
 import React from 'react';
 
+
 function Card({ card, currentUser, onCardClick, onCardLike, onCardDelete }) {
 
   function handleClick() {

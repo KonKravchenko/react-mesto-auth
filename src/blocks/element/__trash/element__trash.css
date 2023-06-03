@@ -1,7 +1,7 @@
 .element__trash {
   display: flex;
   position: absolute;
-  background-image: url(../../../images/Trash.svg);
+  background-image: url(../../../images/Trash.png);
   right: 20px;
   top: 20px;
   min-width: 18px;

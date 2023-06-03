@@ -1,5 +1,6 @@
 import React from 'react';
-import editProfileImage from '../images/__edit_profile_image.svg';
+// import editProfileImage from '../images/__edit_profile_image.svg';
+import { ReactComponent as EditProfileImage  } from '../images/__edit_profile_image.svg';
 import Card from './Card';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { CardContext } from '../contexts/CardContext';
@@ -29,7 +30,8 @@ function Main({
             <div className="avatar__overlay"></div>
             <button className="avatar__edit-button" arial-label="изменить аватар" type="button"
               onClick={onEditAvatar}>
-              <img src={editProfileImage} />
+              {/* <img src={editProfileImage} /> */}
+              <EditProfileImage />
             </button>
           </div>
           <div className="profile__rotor">
