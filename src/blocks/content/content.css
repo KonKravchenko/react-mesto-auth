@@ -1,0 +1,15 @@
+.content {
+  grid-area: content;
+  display: grid;
+  row-gap: 51px;
+  margin: 0px;
+  padding: 40px 0 66px;
+  width: min(95vw, 880px);
+}
+
+@media screen and (max-width: 388px) {
+  .content {
+    row-gap: 36px;
+    padding: 42px 0 48px;
+  }
+}
