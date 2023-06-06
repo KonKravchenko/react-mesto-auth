@@ -32,6 +32,7 @@ const Login = ({ navBar, handleLogin, infoTooltipData, tokenCheck }) => {
           handleLogin();
           tokenCheck();
           infoTooltipData(data)
+          console.log(data)
           navigate('/main', { replace: true });
         }
       })

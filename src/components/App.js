@@ -170,6 +170,10 @@ function App() {
     }
   }
 
+  React.useEffect(() => {
+    handleTokenCheck()
+  }, [])
+
 
   const handleLogin = () => {
     setLoggedIn(true);
