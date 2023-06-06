@@ -31,10 +31,8 @@ export const authorize = (password, email) => {
   })
     .then((response => response.json()))
     .then((data) => {
-      console.log(data)
       if (data) {
         localStorage.setItem('token', data.token);
-        console.log(data);
         return data;
       }
     })
@@ -50,6 +48,6 @@ export const checkToken = (token) => {
     }
   })
     .then(res => res.json())
-    .then((data) =>  data )
+    .then((data) => data)
     .catch(err => console.log(err))
 }

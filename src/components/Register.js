@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import * as auth from '../auth.js';
 
-const Register = ({ navBar, handleRegister}) => {
+const Register = ({ navBar, handleRegister }) => {
 
   const [formValue, setFormValue] = useState({
     password: '',
@@ -24,14 +24,10 @@ const Register = ({ navBar, handleRegister}) => {
     if (formValue.email || formValue.password) {
       auth.register(formValue.password, formValue.email)
         .then((res) => {
-          console.log(formValue)
-          console.log(res)
-          
           if (res.data) {
             handleRegister()
             navigate('/sign-in', { replace: true });
           } else {
-            console.log(res)
             handleRegister();
           }
         }
@@ -39,7 +35,7 @@ const Register = ({ navBar, handleRegister}) => {
     }
   }
 
- 
+
   return (
     <div className="register" >
 

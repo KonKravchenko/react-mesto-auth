@@ -74,7 +74,6 @@ function App() {
 
   function handleInfoTooltipData(data) {
     setInfoTooltipData(data)
-    console.log(data)
   }
 
   function closeAllPopups() {
@@ -160,12 +159,13 @@ function App() {
       auth.checkToken(jwt)
         .then((res) => {
           if (res) {
-            console.log(jwt)
             setLoggedIn(true);
             setUserEmail(res.data)
-            console.log(res.data)
             navigate("/main", { replace: true })
           }
+        })
+        .catch((err) => {
+          console.log(`Ошибка: ${err}`)
         });
     }
   }

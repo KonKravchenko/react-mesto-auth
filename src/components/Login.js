@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import * as auth from '../auth.js';
 
 
-const Login = ({navBar, handleLogin, infoTooltipData, tokenCheck }) => {
+const Login = ({ navBar, handleLogin, infoTooltipData, tokenCheck }) => {
 
 
   const [formValue, setFormValue] = useState({
@@ -27,7 +27,6 @@ const Login = ({navBar, handleLogin, infoTooltipData, tokenCheck }) => {
     }
     auth.authorize(formValue.password, formValue.email)
       .then((data) => {
-        console.log(data)
         if (data.token) {
           setFormValue({ password: '', email: '' });
           handleLogin();
