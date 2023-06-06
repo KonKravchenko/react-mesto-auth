@@ -63,6 +63,7 @@
 @import url(./blocks/popup/__big-image-title/popup__big-imag-title.css);
 @import url(./blocks/popup/_avatar/popup_avatar.css);
 @import url(./blocks/popup/_confirm/popup_confirm.css);
+@import url(./blocks/popup/_infoTooltip/popup_infoTooltip.css);
 
 /*--Форма--*/
 @import url(./blocks/form/form.css);
