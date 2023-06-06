@@ -201,7 +201,7 @@ function App() {
 
 
           <Routes>
-            <Route path="/" element={loggedIn ? <Navigate to="/react-mesto-auth/main" replace /> : <Navigate to="/react-mesto-auth/sign-in" replace />} />
+            <Route path="/*" element={loggedIn ? <Navigate to="/react-mesto-auth/main" replace /> : <Navigate to="/react-mesto-auth/sign-in" replace />} />
             <Route path="/react-mesto-auth" element={loggedIn ? <Navigate to="/react-mesto-auth/main" replace /> : <Navigate to="/react-mesto-auth/sign-in" replace />} />
 
             <Route path="/react-mesto-auth/sign-up" element={<Register
@@ -214,7 +214,7 @@ function App() {
               infoTooltipData={handleInfoTooltipData}
               tokenCheck={handleTokenCheck} />} />
 
-            <Route path="/main" element={<ProtectedRouteElement element={Main}
+            <Route path="/react-mesto-auth/main" element={<ProtectedRouteElement element={Main}
               onEditAvatar={handleEditAvatarClick}
               onEditProfile={handleEditProfileClick}
               onAddPlace={handleAddPlaceClick}

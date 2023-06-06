@@ -8,7 +8,7 @@ function NavBar({ userEmail, isActive, navBarLog, navBarReg, loggedIn, loggedOut
 
   function signOut() {
     localStorage.removeItem('token');
-    history('/sign-in');
+    history('/react-mesto-auth/sign-in');
     loggedOut()
   }
 
@@ -17,9 +17,9 @@ function NavBar({ userEmail, isActive, navBarLog, navBarReg, loggedIn, loggedOut
 
     <nav className="menu">
       {isActive ? (
-        !loggedIn && <NavLink to="/sign-in" className="menu__link" onClick={navBarReg}>Войти</NavLink>
+        !loggedIn && <NavLink to="/react-mesto-auth/sign-in" className="menu__link" onClick={navBarReg}>Войти</NavLink>
       ) : (
-        !loggedIn && < NavLink to="/sign-up" className="menu__link" onClick={navBarLog}>Регистрация</NavLink>
+        !loggedIn && < NavLink to="/react-mesto-auth/sign-up" className="menu__link" onClick={navBarLog}>Регистрация</NavLink>
       )}
       {loggedIn &&
         <div className="menu__container">
