@@ -37,8 +37,7 @@ function App() {
 
   const [userEmail, setUserEmail] = useState({})
 
-
-  React.useEffect(() => {
+  function handleApi() {
     Promise.all([
       api.getProfileData(),
       api.getInitialCards()
@@ -50,7 +49,7 @@ function App() {
       .catch((err) => {
         console.log(`Ошибка: ${err}`)
       });
-  }, [])
+  }
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true)
@@ -162,6 +161,7 @@ function App() {
             setLoggedIn(true);
             setUserEmail(res.data)
             navigate("/main", { replace: true })
+            handleApi()
           }
         })
         .catch((err) => {
@@ -209,11 +209,9 @@ function App() {
             <Route path="/react-mesto-auth" element={loggedIn ? <Navigate to="/react-mesto-auth/main" replace /> : <Navigate to="/react-mesto-auth/sign-in" replace />} />
 
             <Route path="/react-mesto-auth/sign-up" element={<Register
-              navBar={handleNavBarLogin}
               handleRegister={handleInfoTooltip}
             />} />
             <Route path="/react-mesto-auth/sign-in" element={<Login
-              navBar={handleNavBarReg}
               handleLogin={handleLogin}
               infoTooltipData={handleInfoTooltipData}
               tokenCheck={handleTokenCheck} />} />

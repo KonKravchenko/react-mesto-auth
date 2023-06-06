@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import * as auth from '../auth.js';
 
 
-const Login = ({ navBar, handleLogin, infoTooltipData, tokenCheck }) => {
+const Login = ({ handleLogin, infoTooltipData, tokenCheck }) => {
 
 
   const [formValue, setFormValue] = useState({
@@ -32,7 +32,6 @@ const Login = ({ navBar, handleLogin, infoTooltipData, tokenCheck }) => {
           handleLogin();
           tokenCheck();
           infoTooltipData(data)
-          console.log(data)
           navigate('/main', { replace: true });
         }
       })
