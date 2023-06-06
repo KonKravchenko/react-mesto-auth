@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import Header from './Header';
 import Main from './Main';
 import Footer from './Footer';
-import PopupWithForm from './PopupWithForm';
 import ImagePopup from './ImagePopup';
 import { api } from '../utils/Api';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
@@ -10,17 +9,33 @@ import { CardContext } from '../contexts/CardContext';
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import InfoTooltip from './InfoTooltip';
+
+import { Route, Routes, Navigate, useNavigate } from 'react-router-dom';
+import Register from './Register';
+import Login from './Login';
+import ProtectedRouteElement from "./ProtectedRoute";
+import * as auth from '../auth';
+
 
 function App() {
 
   const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false)
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false)
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false)
+  const [isInfoTooltip, setInfoTooltip] = useState(false)
+  const [isInfoTooltipData, setInfoTooltipData] = useState({})
+
   const [selectedCard, setSelectedCard] = useState({})
 
   const [currentUser, setCurrentUser] = useState([])
-  const [cards, setCards] = React.useState([]);
+  const [cards, setCards] = useState([]);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const navigate = useNavigate();
 
+  const [isActive, setIsActive] = useState(false);
+
+  const [userEmail, setUserEmail] = useState({})
 
 
   React.useEffect(() => {
@@ -39,7 +54,6 @@ function App() {
 
   function handleEditAvatarClick() {
     setEditAvatarPopupOpen(true)
-
   }
 
   function handleEditProfileClick() {
@@ -54,18 +68,28 @@ function App() {
     setSelectedCard(card)
   }
 
+  function handleInfoTooltip() {
+    setInfoTooltip(true)
+  }
+
+  function handleInfoTooltipData(data) {
+    setInfoTooltipData(data)
+    console.log(data)
+  }
+
   function closeAllPopups() {
     setEditAvatarPopupOpen(false)
     setEditProfilePopupOpen(false)
     setAddPlacePopupOpen(false)
     setSelectedCard({})
+    setInfoTooltip(false)
   }
 
   function handleCardLike(card) {
-    // Снова проверяем, есть ли уже лайк на этой карточке
+
     const isLiked = card.likes.some(i => i._id === currentUser._id);
 
-    // Отправляем запрос в API и получаем обновлённые данные карточки
+
     if (!isLiked) {
       api.addLike(card._id)
         .then((newCard) => {
@@ -127,14 +151,78 @@ function App() {
       .catch((err) => {
         console.log(`Ошибка: ${err}`)
       });
+  }
 
+
+  const handleTokenCheck = () => {
+    if (localStorage.getItem('token')) {
+      const jwt = localStorage.getItem('token');
+      auth.checkToken(jwt)
+        .then((res) => {
+          if (res) {
+            console.log(jwt)
+            setLoggedIn(true);
+            setUserEmail(res.data)
+            console.log(res.data)
+            navigate("/main", { replace: true })
+          }
+        });
+    }
+  }
+
+
+  const handleLogin = () => {
+    setLoggedIn(true);
+  }
+
+  const handleLogout = () => {
+    setLoggedIn(false);
+  }
+
+  function handleNavBarLogin() {
+    setIsActive(true)
+  }
+
+  function handleNavBarReg() {
+    setIsActive(false)
   }
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <CardContext.Provider value={cards}>
         <div className="page">
-          <Header />
+          <Header
+            userEmail={userEmail}
+            isActive={isActive}
+            navBarLog={handleNavBarLogin}
+            navBarReg={handleNavBarReg}
+            loggedIn={loggedIn}
+            loggedOut={handleLogout} />
+
+
+          <Routes>
+            <Route path="/" element={loggedIn ? <Navigate to="/main" replace /> : <Navigate to="/sign-in" replace />} />
+            <Route path="/react-mesto-auth" element={loggedIn ? <Navigate to="/main" replace /> : <Navigate to="/sign-in" replace />} />
+
+            <Route path="/sign-up" element={<Register
+              navBar={handleNavBarLogin}
+              handleRegister={handleInfoTooltip}
+            />} />
+            <Route path="/sign-in" element={<Login
+              navBar={handleNavBarReg}
+              handleLogin={handleLogin}
+              infoTooltipData={handleInfoTooltipData}
+              tokenCheck={handleTokenCheck} />} />
+
+            <Route path="/main" element={<ProtectedRouteElement element={Main}
+              onEditAvatar={handleEditAvatarClick}
+              onEditProfile={handleEditProfileClick}
+              onAddPlace={handleAddPlaceClick}
+              onCardClick={handleCardClick}
+              onCardLike={handleCardLike}
+              onCardDelete={handleCardDelete}
+              loggedIn={loggedIn} />} />
+          </Routes>
           <ImagePopup
             cardData={selectedCard}
             onClose={closeAllPopups}
@@ -156,14 +244,10 @@ function App() {
             onClose={closeAllPopups}
             onAddPlace={handleAddPlaceSubmit} />
 
-
-          <Main
-            onEditAvatar={handleEditAvatarClick}
-            onEditProfile={handleEditProfileClick}
-            onAddPlace={handleAddPlaceClick}
-            onCardClick={handleCardClick}
-            onCardLike={handleCardLike}
-            onCardDelete={handleCardDelete}
+          <InfoTooltip
+            isOpen={isInfoTooltip}
+            onClose={closeAllPopups}
+            infoTooltipData={isInfoTooltipData}
           />
 
           <Footer />
@@ -174,3 +258,4 @@ function App() {
 }
 
 export default App;
+

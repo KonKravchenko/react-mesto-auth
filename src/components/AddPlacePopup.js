@@ -54,6 +54,8 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       onReset={resetInput}
       onSubmit={handleSubmit}
     >
+      
+
       <div className="form__input">
         <input
           className="form__item"
@@ -81,6 +83,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
           value={link ?? ''} onChange={handleLinkChange} />
         <span className="form__item-error"></span>
       </div>
+
     </PopupWithForm>
 
   )

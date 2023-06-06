@@ -11,6 +11,14 @@
 @import url(./blocks/header/header.css);
 @import url(./blocks/header/__logo/header__logo.css);
 
+/*--Меню--*/
+@import url(./blocks/menu/menu.css);
+@import url(./blocks/menu/__link/menu__link.css);
+@import url(./blocks/menu/__container/menu__container.css);
+@import url(./blocks/menu/__item/menu__item.css);
+@import url(./blocks/menu/__button/menu__button.css);
+
+
 /*--Основной контент--*/
 @import url(./blocks/content/content.css);
 
@@ -58,13 +66,29 @@
 
 /*--Форма--*/
 @import url(./blocks/form/form.css);
+@import url(./blocks/form/__infoTooltip/form__infoTooltip.css);
 @import url(./blocks/form/__title/form__title.css);
+@import url(./blocks/form/__title/_tooltip/form__title_tooltip.css);
 @import url(./blocks/form/__input-container/form__input-container.css);
 @import url(./blocks/form/__item/form__item.css);
 @import url(./blocks/form/__item/_bottom/form__item_bottom.css);
 @import url(./blocks/form/__button/form__button.css);
 @import url(./blocks/form/__input/form__input.css);
+@import url(./blocks/form/_black/form_black.css);
+@import url(./blocks/form/__title/_black/form__title_black.css);
+@import url(./blocks/form/__input-container/_black/form__input-container_black.css);
+@import url(./blocks/form/__item/_black/form__item_black.css);
+@import url(./blocks/form/__button/_white/form__button_white.css);
+@import url(./blocks/form/__image/form__image.css);
+@import url(./blocks/form/__infoTooltip-container/form__infoTooltip-container.css);
 
+/*--Регистрация--*/
+@import url(./blocks/register/register.css);
+
+@import url(./blocks/sign/sign.css);
+@import url(./blocks/sign/__text/sign__text.css);
+@import url(./blocks/sign/__link/sign__link.css);
+@import url(./blocks/login/login.css);
 
 /*--Подвал--*/
 @import url(./blocks/footer/footer.css);

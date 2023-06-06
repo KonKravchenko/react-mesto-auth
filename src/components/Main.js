@@ -1,6 +1,5 @@
 import React from 'react';
-// import editProfileImage from '../images/__edit_profile_image.svg';
-import { ReactComponent as EditProfileImage  } from '../images/__edit_profile_image.svg';
+import { ReactComponent as EditProfileImage } from '../images/__edit_profile_image.svg';
 import Card from './Card';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
 import { CardContext } from '../contexts/CardContext';
