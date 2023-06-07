@@ -83,7 +83,8 @@
 @import url(./blocks/form/__image/form__image.css);
 @import url(./blocks/form/__infoTooltip-container/form__infoTooltip-container.css);
 
-/*--Регистрация--*/
+/*--Форма регистрации и авторизации--*/
+@import url(./blocks/authForm/authForm.css);
 @import url(./blocks/register/register.css);
 
 @import url(./blocks/sign/sign.css);

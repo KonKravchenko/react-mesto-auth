@@ -13,7 +13,7 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
   function handleDescriptionChange(event) {
     setDescription(event.target.value);
   }
-
+  
 
   function handleSubmit(event) {
     // Запрещаем браузеру переходить по адресу формы

@@ -24,16 +24,16 @@ function App() {
   const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
   const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
   const [isInfoTooltip, setInfoTooltip] = useState(false);
+
   const [isInfoTooltipData, setInfoTooltipData] = useState({});
 
   const [selectedCard, setSelectedCard] = useState({});
-
-  const [currentUser, setCurrentUser] = useState([]);
   const [cards, setCards] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
+  const [isActive, setIsActive] = useState(false);
   const navigate = useNavigate();
 
-  const [isActive, setIsActive] = useState(false);
+  const [currentUser, setCurrentUser] = useState([]);
 
   const [userEmail, setUserEmail] = useState({});
 
@@ -167,7 +167,6 @@ function App() {
   function handleLogin(formValue) {
     auth.authorize(formValue)
       .then((data) => {
-        console.log(data)
         if (data.token) {
           localStorage.setItem('token', data.token)
           handleTokenCheck();
