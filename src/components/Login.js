@@ -1,16 +1,6 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import * as auth from '../auth.js';
+import React from 'react';
 
-
-const Login = ({ handleLogin, infoTooltipData, tokenCheck }) => {
-
-
-  const [formValue, setFormValue] = useState({
-    password: '',
-    email: ''
-  })
-  const navigate = useNavigate();
+const Login = ({ handleLogin, formValue, setFormValue }) => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,22 +10,15 @@ const Login = ({ handleLogin, infoTooltipData, tokenCheck }) => {
       [name]: value
     });
   }
+
+  const { email, password } = formValue;
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formValue.email || !formValue.password) {
+    if (!email || !password) {
       return;
     }
-    auth.authorize(formValue.password, formValue.email)
-      .then((data) => {
-        if (data.token) {
-          setFormValue({ password: '', email: '' });
-          handleLogin();
-          tokenCheck();
-          infoTooltipData(data)
-          navigate('/main', { replace: true });
-        }
-      })
-      .catch(err => console.log(err));
+    handleLogin(formValue)
   }
 
   return (
@@ -50,7 +33,7 @@ const Login = ({ handleLogin, infoTooltipData, tokenCheck }) => {
             name="email"
             type="email"
             placeholder="Email"
-            value={formValue.email}
+            value={email}
             onChange={handleChange} />
 
           <input className="form__item form__item_bottom form__item_black"
@@ -58,7 +41,7 @@ const Login = ({ handleLogin, infoTooltipData, tokenCheck }) => {
             name="password"
             type="password"
             placeholder="Пароль"
-            value={formValue.password}
+            value={password}
             onChange={handleChange} />
         </div>
 

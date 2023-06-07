@@ -1,7 +1,7 @@
 .header {
   grid-area: header;
   margin: 0;
-  padding: 0 0 41px;
+  padding: 45px 0 41px;
   border-bottom: 1px solid rgba(84, 84, 84, 0.7);
   max-width: 880px;
 
@@ -16,12 +16,12 @@
 
 @media screen and (max-width: 897px) {
   .header {
-    padding: 0 27px 41px;
+    padding: 28px 27px 41px;
   }
 }
 
 @media screen and (max-width: 400px) {
   .header {
-    padding: 0 27px 31.6px;
+    padding: 28px 27px 31.6px;
   }
 }

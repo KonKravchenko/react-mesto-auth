@@ -20,22 +20,27 @@ import * as auth from '../auth';
 
 function App() {
 
-  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false)
-  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false)
-  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false)
-  const [isInfoTooltip, setInfoTooltip] = useState(false)
-  const [isInfoTooltipData, setInfoTooltipData] = useState({})
+  const [isEditAvatarPopupOpen, setEditAvatarPopupOpen] = useState(false);
+  const [isEditProfilePopupOpen, setEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setAddPlacePopupOpen] = useState(false);
+  const [isInfoTooltip, setInfoTooltip] = useState(false);
+  const [isInfoTooltipData, setInfoTooltipData] = useState({});
 
-  const [selectedCard, setSelectedCard] = useState({})
+  const [selectedCard, setSelectedCard] = useState({});
 
-  const [currentUser, setCurrentUser] = useState([])
+  const [currentUser, setCurrentUser] = useState([]);
   const [cards, setCards] = useState([]);
   const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
 
   const [isActive, setIsActive] = useState(false);
 
-  const [userEmail, setUserEmail] = useState({})
+  const [userEmail, setUserEmail] = useState({});
+
+  const [formValue, setFormValue] = useState({
+    password: '',
+    email: ''
+  })
 
   function handleApi() {
     Promise.all([
@@ -65,14 +70,6 @@ function App() {
 
   function handleCardClick(card) {
     setSelectedCard(card)
-  }
-
-  function handleInfoTooltip() {
-    setInfoTooltip(true)
-  }
-
-  function handleInfoTooltipData(data) {
-    setInfoTooltipData(data)
   }
 
   function closeAllPopups() {
@@ -151,18 +148,45 @@ function App() {
       });
   }
 
+  function handleRegister(formValue) {
+    auth.register(formValue)
+      .then((res) => {
+        console.log('вот здесь', res)
+        setInfoTooltipData(res)
+        setInfoTooltip(true)
+        navigate('/sign-in', { replace: true });
+      }
+      )
+      .catch(err => {
+        console.log('здесь?', err)
+        setInfoTooltipData(err)
+        setInfoTooltip(true)
+      });
+  }
 
-  const handleTokenCheck = () => {
+  function handleLogin(formValue) {
+    auth.authorize(formValue)
+      .then((data) => {
+        console.log(data)
+        if (data.token) {
+          localStorage.setItem('token', data.token)
+          handleTokenCheck();
+          setFormValue({ password: '', email: '' });
+          setLoggedIn(true);
+        }
+      })
+      .catch(err => console.log(err));
+  }
+
+  function handleTokenCheck() {
     if (localStorage.getItem('token')) {
       const jwt = localStorage.getItem('token');
       auth.checkToken(jwt)
         .then((res) => {
-          if (res) {
-            setLoggedIn(true);
-            setUserEmail(res.data)
-            navigate("/main", { replace: true })
-            handleApi()
-          }
+          setLoggedIn(true);
+          handleApi()
+          navigate("/main", { replace: true })
+          setUserEmail(res.data)
         })
         .catch((err) => {
           console.log(`Ошибка: ${err}`)
@@ -170,14 +194,10 @@ function App() {
     }
   }
 
+
   React.useEffect(() => {
     handleTokenCheck()
   }, [])
-
-
-  const handleLogin = () => {
-    setLoggedIn(true);
-  }
 
   const handleLogout = () => {
     setLoggedIn(false);
@@ -209,12 +229,14 @@ function App() {
             <Route path="/react-mesto-auth" element={loggedIn ? <Navigate to="/react-mesto-auth/main" replace /> : <Navigate to="/react-mesto-auth/sign-in" replace />} />
 
             <Route path="/react-mesto-auth/sign-up" element={<Register
-              handleRegister={handleInfoTooltip}
+              handleRegister={handleRegister}
+              formValue={formValue}
+              setFormValue={setFormValue}
             />} />
             <Route path="/react-mesto-auth/sign-in" element={<Login
               handleLogin={handleLogin}
-              infoTooltipData={handleInfoTooltipData}
-              tokenCheck={handleTokenCheck} />} />
+              formValue={formValue}
+              setFormValue={setFormValue} />} />
 
             <Route path="/react-mesto-auth/main" element={<ProtectedRouteElement element={Main}
               onEditAvatar={handleEditAvatarClick}
