@@ -1,26 +1,36 @@
+
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { useForm } from '../hooks/useForm';
 
 function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
 
-  const [avatar, setAvatar] = React.useState([])
-
-  // Подписка на контекст
   const currentUser = React.useContext(CurrentUserContext);
-  const avatarRef = React.useRef();
+
+  const { values, handleChange, setValues } = useForm(currentUser)
+  const { avatar } = values;
+
+ 
 
   React.useEffect(() => {
-    setAvatar(currentUser.avatar);
+    setValues(currentUser);
   }, [currentUser]);
 
+  React.useEffect(() => {
+    setValues('');
+  }, [isOpen]);
+
+  function resetInput(event) {
+    setValues(event.target.reset())
+  }
 
   function handleSubmit(event) {
     event.preventDefault();
-    onUpdateAvatar({
-      avatar: avatarRef.current.value/* Значение инпута, полученное с помощью рефа */
-    });
-    event.target.reset();
+    onUpdateAvatar({ avatar });
+    console.log(values)
+    onUpdateAvatar && resetInput(event)
+
   }
 
   return (
@@ -37,11 +47,12 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
         <input
           className="form__item"
           type="url"
-          name="avatar"
-          ref={avatarRef}
+          name="link"
           placeholder="Ссылка на картинку"
           autoComplete="off"
-          required />
+          required
+          value={avatar ?? ''}
+          onChange={handleChange} />
         <span className="form__item-error"></span>
       </div>
     </PopupWithForm>

@@ -1,47 +1,33 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
 import { CardContext } from '../contexts/CardContext';
+import { useForm } from '../hooks/useForm';
 
 function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
-
-  const [name, setName] = React.useState([])
-  const [link, setLink] = React.useState([])
-
-  function handleNameChange(event) {
-    setName(event.target.value);
-  }
-
-  function handleLinkChange(event) {
-    setLink(event.target.value);
-  }
-
-  function resetInput(event) {
-    setName(event.target.reset())
-    setLink(event.target.reset())
-  }
-
-  function handleSubmit(event) {
-    // Запрещаем браузеру переходить по адресу формы
-    event.preventDefault();
-    // Передаём значения управляемых компонентов во внешний обработчик
-    onAddPlace({ name, link });
-    resetInput(event)
-  }
-
   // Подписка на контекст
   const currentCard = React.useContext(CardContext);
 
-  // После загрузки текущего пользователя из API
-  // его данные будут использованы в управляемых компонентах.
+  const { values, handleChange, setValues } = useForm(currentCard)
+  const { name, link } = values;
+
   React.useEffect(() => {
-    setName(currentCard.name);
-    setLink(currentCard.link);
+    setValues(currentCard)
   }, [currentCard]);
 
   React.useEffect(() => {
-    setName('');
-    setLink('');
-}, [isOpen]);
+    setValues('');
+  }, [isOpen]);
+
+  function resetInput(event) {
+    onAddPlace.ok && setValues(event.target.reset())
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    onAddPlace(values);
+    console.log(values)
+    resetInput(event)
+  }
 
   return (
     <PopupWithForm
@@ -51,10 +37,9 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
       btnAriaLabel="Создать новую карточку"
       isOpen={isOpen}
       onClose={onClose}
-      onReset={resetInput}
       onSubmit={handleSubmit}
     >
-      
+
 
       <div className="form__input">
         <input
@@ -67,7 +52,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
           minLength="2"
           maxLength="30"
 
-          value={name ?? ''} onChange={handleNameChange} />
+          value={name ?? ''} onChange={handleChange} />
         <span className="form__item-error"></span>
       </div>
 
@@ -80,7 +65,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
           autoComplete="off"
           required
 
-          value={link ?? ''} onChange={handleLinkChange} />
+          value={link ?? ''} onChange={handleChange} />
         <span className="form__item-error"></span>
       </div>
 

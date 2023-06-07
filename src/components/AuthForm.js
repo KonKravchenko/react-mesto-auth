@@ -2,10 +2,13 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useForm } from '../hooks/useForm'
 
-export const AuthForm = ({ handle, formValue, name, title, buttonText, btnAriaLabel }) => {
+export const AuthForm = ({ handle, formValue, name, title, buttonText, btnAriaLabel, navBar }) => {
 
   const { values, handleChange } = useForm(formValue)
-
+  React.useEffect(()=>{
+    navBar() 
+  })
+ 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!values.email || !values.password) {

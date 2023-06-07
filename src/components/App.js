@@ -229,11 +229,13 @@ function App() {
 
             <Route path="/react-mesto-auth/sign-up" element={<Register
               handleRegister={handleRegister}
+              navBarLog={handleNavBarLogin}
               formValue={formValue}
               setFormValue={setFormValue}
             />} />
             <Route path="/react-mesto-auth/sign-in" element={<Login
               handleLogin={handleLogin}
+              navBarReg={handleNavBarReg}
               formValue={formValue}
               setFormValue={setFormValue} />} />
 
@@ -246,26 +248,26 @@ function App() {
               onCardDelete={handleCardDelete}
               loggedIn={loggedIn} />} />
           </Routes>
-          <ImagePopup
+          {loggedIn && <ImagePopup
             cardData={selectedCard}
             onClose={closeAllPopups}
-          />
+          />}
 
-          <EditAvatarPopup
+          {loggedIn && <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
             onClose={closeAllPopups}
-            onUpdateAvatar={handleUpdateAvatar} />
+            onUpdateAvatar={handleUpdateAvatar} />}
 
 
-          <EditProfilePopup
+          {loggedIn && <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
-            onUpdateUser={handleUpdateUser} />
+            onUpdateUser={handleUpdateUser} />}
 
-          <AddPlacePopup
+          {loggedIn && <AddPlacePopup
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
-            onAddPlace={handleAddPlaceSubmit} />
+            onAddPlace={handleAddPlaceSubmit} />}
 
           <InfoTooltip
             isOpen={isInfoTooltip}

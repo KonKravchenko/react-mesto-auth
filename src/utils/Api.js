@@ -28,11 +28,11 @@
       .then(this._checkResponse);
   }
 
-  setProfileAvatar(avatar) {
+  setProfileAvatar({avatar}) {
     return fetch(`${this.url}/users/me/avatar`, {
       method: 'PATCH',
       headers: this.headers,
-      body: JSON.stringify(avatar)
+      body: JSON.stringify({avatar})
     })
       .then(this._checkResponse);
   }
@@ -44,11 +44,11 @@
       .then(this._checkResponse);
   }
 
-  setNewCard(name, link) {
+  setNewCard({name, link}) {
     return fetch(`${this.url}/cards`, {
       method: 'POST',
       headers: this.headers,
-      body: JSON.stringify(name, link)
+      body: JSON.stringify({name, link})
     })
       .then(this._checkResponse);
   }

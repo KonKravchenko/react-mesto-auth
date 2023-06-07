@@ -1,38 +1,24 @@
 import React from 'react';
 import PopupWithForm from './PopupWithForm';
 import { CurrentUserContext } from '../contexts/CurrentUserContext';
+import { useForm } from '../hooks/useForm';
 
 function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
 
-  const [name, setName] = React.useState([])
-  const [description, setDescription] = React.useState([])
-  function handleNameChange(event) {
-    setName(event.target.value);
-  }
-
-  function handleDescriptionChange(event) {
-    setDescription(event.target.value);
-  }
-  
-
-  function handleSubmit(event) {
-    // Запрещаем браузеру переходить по адресу формы
-    event.preventDefault();
-
-    // Передаём значения управляемых компонентов во внешний обработчик
-    onUpdateUser({ name, about: description });
-  }
-
-
-  // Подписка на контекст
   const currentUser = React.useContext(CurrentUserContext);
 
-  // После загрузки текущего пользователя из API
-  // его данные будут использованы в управляемых компонентах.
+  const { values, handleChange, setValues } = useForm(currentUser)
+  const {name, about} = values;
+  
+
   React.useEffect(() => {
-    setName(currentUser.name);
-    setDescription(currentUser.about);
+    setValues(currentUser)
   }, [currentUser, isOpen]);
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    onUpdateUser({name, about});
+  }
 
   return (
     <PopupWithForm
@@ -54,8 +40,8 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
           required
           minLength="2"
           maxLength="40"
-          
-          value={name ?? ''} onChange={handleNameChange}/>
+
+          value={name ?? ''} onChange={handleChange} />
 
         <span className="form__item-error"></span>
       </div>
@@ -68,8 +54,8 @@ function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
           autoComplete="off"
           required minLength="2"
           maxLength="200"
-          
-          value={description ?? ''} onChange={handleDescriptionChange}/>
+
+          value={about ?? ''} onChange={handleChange} />
 
         <span className="form__item-error"></span>
       </div>
