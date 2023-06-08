@@ -11,8 +11,6 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
   const { values, handleChange, setValues } = useForm(currentUser)
   const { avatar } = values;
 
- 
-
   React.useEffect(() => {
     setValues(currentUser);
   }, [currentUser]);
@@ -28,7 +26,6 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
   function handleSubmit(event) {
     event.preventDefault();
     onUpdateAvatar({ avatar });
-    console.log(values)
     onUpdateAvatar && resetInput(event)
 
   }

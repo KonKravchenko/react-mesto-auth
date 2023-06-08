@@ -15,7 +15,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
   }, [currentCard]);
 
   React.useEffect(() => {
-    setValues('');
+    setValues({});
   }, [isOpen]);
 
   function resetInput(event) {
@@ -54,7 +54,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
 
           value={name ?? ''} onChange={handleChange} />
         <span className="form__item-error"></span>
-      </div>
+      </div> 
 
       <div className="form__input">
         <input
@@ -67,7 +67,7 @@ function AddPlacePopup({ isOpen, onClose, onAddPlace }) {
 
           value={link ?? ''} onChange={handleChange} />
         <span className="form__item-error"></span>
-      </div>
+      </div> 
 
     </PopupWithForm>
 

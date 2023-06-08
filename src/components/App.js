@@ -41,7 +41,7 @@ function App() {
     password: '',
     email: ''
   })
-
+  
   function handleApi() {
     Promise.all([
       api.getProfileData(),
@@ -184,7 +184,7 @@ function App() {
         .then((res) => {
           setLoggedIn(true);
           handleApi()
-          navigate("/main", { replace: true })
+          navigate("/react-mesto-auth/main", { replace: true })
           setUserEmail(res.data)
         })
         .catch((err) => {
@@ -253,12 +253,6 @@ function App() {
             onClose={closeAllPopups}
           />}
 
-          {loggedIn && <EditAvatarPopup
-            isOpen={isEditAvatarPopupOpen}
-            onClose={closeAllPopups}
-            onUpdateAvatar={handleUpdateAvatar} />}
-
-
           {loggedIn && <EditProfilePopup
             isOpen={isEditProfilePopupOpen}
             onClose={closeAllPopups}
@@ -268,6 +262,13 @@ function App() {
             isOpen={isAddPlacePopupOpen}
             onClose={closeAllPopups}
             onAddPlace={handleAddPlaceSubmit} />}
+
+          {loggedIn && <EditAvatarPopup
+            isOpen={isEditAvatarPopupOpen}
+            onClose={closeAllPopups}
+            onUpdateAvatar={handleUpdateAvatar}
+            handleApi={handleApi}
+          />}
 
           <InfoTooltip
             isOpen={isInfoTooltip}
