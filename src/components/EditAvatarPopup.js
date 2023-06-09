@@ -20,14 +20,13 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
   }, [isOpen]);
 
   function resetInput(event) {
-    setValues(event.target.reset())
+    onUpdateAvatar.ok && setValues(event.target.reset())
   }
 
   function handleSubmit(event) {
     event.preventDefault();
     onUpdateAvatar({ avatar });
-    onUpdateAvatar && resetInput(event)
-
+    resetInput(event)
   }
 
   return (
@@ -44,7 +43,7 @@ function EditAvatarPopup({ isOpen, onClose, onUpdateAvatar }) {
         <input
           className="form__item"
           type="url"
-          name="link"
+          name="avatar"
           placeholder="Ссылка на картинку"
           autoComplete="off"
           required

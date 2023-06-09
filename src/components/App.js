@@ -41,7 +41,7 @@ function App() {
     password: '',
     email: ''
   })
-  
+
   function handleApi() {
     Promise.all([
       api.getProfileData(),
@@ -151,14 +151,12 @@ function App() {
   function handleRegister(formValue) {
     auth.register(formValue)
       .then((res) => {
-        console.log('вот здесь', res)
         setInfoTooltipData(res)
         setInfoTooltip(true)
         navigate('/sign-in', { replace: true });
       }
       )
       .catch(err => {
-        console.log('здесь?', err)
         setInfoTooltipData(err)
         setInfoTooltip(true)
       });

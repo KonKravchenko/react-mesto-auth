@@ -1,5 +1,10 @@
 export const BASE_URL = 'https://auth.nomoreparties.co';
 
+const _checkResponse = (res) => {
+ return res.ok ?  res.json() : Promise.reject(`Ошибка: ${res.status} ${res.statusText}`)
+}
+
+
 export const register = ({ password, email }) => {
   return fetch(`${BASE_URL}/signup`, {
     method: 'POST',
@@ -8,11 +13,11 @@ export const register = ({ password, email }) => {
     },
     body: JSON.stringify({ password, email })
   })
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+    .then(res =>_checkResponse(res))    
 };
 
 
-export const authorize = ({password, email}) => {
+export const authorize = ({ password, email }) => {
   return fetch(`${BASE_URL}/signin`, {
     method: 'POST',
     headers: {
@@ -20,7 +25,7 @@ export const authorize = ({password, email}) => {
     },
     body: JSON.stringify({ password, email })
   })
-  .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+  .then(res =>_checkResponse(res))  
 };
 
 export const checkToken = (token) => {
@@ -31,8 +36,5 @@ export const checkToken = (token) => {
       'Authorization': `Bearer ${token}`,
     }
   })
-    // .then(res => res.json())
-    // .then((data) => data)
-    // .catch(err => console.log(err))
-    .then(res => res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`))
+  .then(res =>_checkResponse(res))   
 }
